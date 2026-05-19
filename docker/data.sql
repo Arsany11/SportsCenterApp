@@ -1,9 +1,9 @@
 -- -----------------------------------------------------
 -- Schema full-stack-sports-center
 -- -----------------------------------------------------
-CREATE DATABASE IF NOT EXISTS `sports-center`;
+CREATE DATABASE IF NOT EXISTS `sportscenter`;
 
-USE `sports-center` ;
+USE `sportscenter` ;
 
 -- Drop existing tables if they exist
 DROP TABLE IF EXISTS Brand;
