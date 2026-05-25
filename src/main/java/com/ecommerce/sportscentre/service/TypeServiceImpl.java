@@ -23,10 +23,10 @@ public class TypeServiceImpl implements TypeService{
         log.info("Fetching all Types!!!");
         //Fetching Types
         List<Type> typesList = typeRepository.findAll();
-        // now use stream operator to map with response
+        //  Map Type -> TypeResponse
         List<TypeResponse> typeResponses = typesList.stream()
                 .map(this::convertToTypeResponse)
-                .collect(Collectors.toList());
+                        .collect(Collectors.toList());
         log.info("Fetched all Types");
         return typeResponses;
     }

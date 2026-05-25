@@ -23,7 +23,7 @@ private final BrandRepository brandRepository;
         log.info("Fetching all Brands!!!");
         //Fetch brands
         List<Brand> brandsList = brandRepository.findAll();
-        // now use stream operator to map with response
+        //  Map Brand -> BrandResponse
         List<BrandResponse> brandResponses = brandsList.stream()
                 .map(this::convertToBrandResponse)
                 .collect(Collectors.toList());
