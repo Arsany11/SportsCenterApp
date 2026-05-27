@@ -18,3 +18,7 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
+  data:
+    web:
+      pageable:
+        one-indexed-parameters: true
