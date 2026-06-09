@@ -4,10 +4,11 @@ import { Product } from '../shared/models/product';
 import { CommonModule } from '@angular/common';
 import { Brand } from '../shared/models/brand';
 import { Type } from '../shared/models/type';
+import { ProductItemComponent } from './product-item/product-item.component';
 
 @Component({
   selector: 'app-store',
-  imports: [CommonModule],
+  imports: [CommonModule, ProductItemComponent],
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.scss'],
 })

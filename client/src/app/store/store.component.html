@@ -15,23 +15,18 @@
 
             <h5 class="text-primary ml-3 mt-4 mb-3">Brands</h5>
             <ul class="list-group my-3">
-                <li 
-                class="list-group-item" 
-                *ngFor="let brand of brands" 
-                [ngClass]="{active: selectedBrand?.id === 0 && brand.id==0 || (selectedBrand === brand && selectedBrand?.id !== 0)}"
-                (click)="selectBrand(brand)"
-                >
-                {{ brand.name }}
+                <li class="list-group-item" *ngFor="let brand of brands"
+                    [ngClass]="{active: selectedBrand?.id === 0 && brand.id==0 || (selectedBrand === brand && selectedBrand?.id !== 0)}"
+                    (click)="selectBrand(brand)">
+                    {{ brand.name }}
                 </li>
             </ul>
             <h5 class="text-primary ml-3 mt-4 mb-3">Types</h5>
             <ul class="list-group my-3">
-                <li class="list-group-item" 
-                *ngFor="let type of types" 
-                [ngClass]="{active: selectedType?.id === 0 && type.id==0 || (selectedType === type && selectedType?.id !== 0)}"
-                (click)="selectType(type)"
-                >
-                {{ type.name }}
+                <li class="list-group-item" *ngFor="let type of types"
+                    [ngClass]="{active: selectedType?.id === 0 && type.id==0 || (selectedType === type && selectedType?.id !== 0)}"
+                    (click)="selectType(type)">
+                    {{ type.name }}
                 </li>
             </ul>
         </section>
@@ -51,26 +46,8 @@
                 </div>
                 <div class="container">
                     <div class="row">
-                        <!-- Product items will be displayed here -->
                         <div class="col-md-4 mb-4" *ngFor="let product of products">
-                            <div class="card h-100 shadow-5m" *ngIf="product">
-                                <div class="image position-relative;" style="cursor:pointer">
-                                    <img src="{{ product.pictureUrl }}" class="img-fluid bg-light"
-                                        alt="{{ product.name }}" />
-                                    <div class="card-body d-flex flex-column">
-                                        <h5 class="card-title">{{ product.name }}</h5>
-                                        <p class="card-text">
-                                            Price :{{ product.price | currency:"INR" }}</p>
-
-                                        <!-- button -->
-                                        <div class="btn-group mt-auto">
-                                            <button class="btn btn-primary me-2">View</button>
-                                            <button class="btn btn-success fa fa-shopping-cart">
-                                            </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <app-product-item [product]="product"></app-product-item>
                         </div>
                     </div>
                 </div>
