@@ -12,4 +12,9 @@ import java.util.List;
 public interface ProductRepository extends JpaRepository<Product , Integer> {
     @Query("SELECT p FROM Product p where p.name LIKE %:keyword%")
     List<Product> searchByName(@Param("keyword") String keyword);
+
+    @Query("SELECT p FROM Product p where p.brand.id = :brandId And p.type.id = :typeId And p.name LIKE %:keyword%")
+    List<Product> searchByBrandTypeAndName(@Param("brandId") Integer brandId, @Param("typeId") Integer typeId ,@Param("keyword") String keyword);
+    @Query("SELECT p FROM Product p where p.brand.id = :brandId And p.type.id = :typeId ")
+    List<Product> searchByBrandAndType(@Param("brandId") Integer brandId, @Param("typeId") Integer typeId );
 }

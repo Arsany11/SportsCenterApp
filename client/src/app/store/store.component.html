@@ -1,0 +1,80 @@
+<div class="container mt-3">
+    <div class="row">
+        <div class="col-md-12 text-center">
+            <h1>Welcome to {{title}}</h1>
+            <p>Your one-stop shop for all sports needs.</p>
+        </div>
+        <section class="col-3">
+            <!-- filterSection
+                sort filter -->
+            <h5 class="text-primary ml-3 mt-4 mb-3">Sort</h5>
+            <select class="custom-select mb-4">
+                <option value="asc">Name Ascending</option>
+                <option value="desc">Name Descending</option>
+            </select>
+
+            <h5 class="text-primary ml-3 mt-4 mb-3">Brands</h5>
+            <ul class="list-group my-3">
+                <li 
+                class="list-group-item" 
+                *ngFor="let brand of brands" 
+                [ngClass]="{active: selectedBrand === brand}"
+                (click)="selectBrand(brand)"
+                >
+                {{ brand.name }}
+                </li>
+            </ul>
+            <h5 class="text-primary ml-3 mt-4 mb-3">Types</h5>
+            <ul class="list-group my-3">
+                <li class="list-group-item" 
+                *ngFor="let type of types" 
+                [ngClass]="{active: selectedType === type}"
+                (click)="selectType(type)"
+                >
+                {{ type.name }}
+                </li>
+            </ul>
+        </section>
+
+        <!-- Product Section -->
+        <section class="col-9">
+            <div>
+                <div class="d-flex justify-content-between align-items-center pb-2">
+                    <div class="d-flex justify-content-center align-items-center"></div>
+
+                    <!-- search and reset filters -->
+                    <div class="d-flex mt-2">
+                        <input type="text" class="form-control mr-2" placeholder="Search" style="width: 200px" />
+                        <button class="btn btn-outline-primary mx-2">Search</button>
+                        <button class="btn btn-outline-secondary">Reset</button>
+                    </div>
+                </div>
+                <div class="container">
+                    <div class="row">
+                        <!-- Product items will be displayed here -->
+                        <div class="col-md-4 mb-4" *ngFor="let product of products">
+                            <div class="card h-100 shadow-5m" *ngIf="product">
+                                <div class="image position-relative;" style="cursor:pointer">
+                                    <img src="{{ product.pictureUrl }}" class="img-fluid bg-light"
+                                        alt="{{ product.name }}" />
+                                    <div class="card-body d-flex flex-column">
+                                        <h5 class="card-title">{{ product.name }}</h5>
+                                        <p class="card-text">
+                                            Price :{{ product.price | currency:"INR" }}</p>
+
+                                        <!-- button -->
+                                        <div class="btn-group mt-auto">
+                                            <button class="btn btn-primary me-2">View</button>
+                                            <button class="btn btn-success fa fa-shopping-cart">
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
