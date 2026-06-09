@@ -17,4 +17,8 @@ public interface ProductRepository extends JpaRepository<Product , Integer> {
     List<Product> searchByBrandTypeAndName(@Param("brandId") Integer brandId, @Param("typeId") Integer typeId ,@Param("keyword") String keyword);
     @Query("SELECT p FROM Product p where p.brand.id = :brandId And p.type.id = :typeId ")
     List<Product> searchByBrandAndType(@Param("brandId") Integer brandId, @Param("typeId") Integer typeId );
+    @Query("SELECT p FROM Product p where p.brand.id = :brandId ")
+    List<Product> searchByBrand(@Param("brandId") Integer brandI );
+    @Query("SELECT p FROM Product p where p.type.id = :typeId ")
+    List<Product> searchByType( @Param("typeId") Integer typeId );
 }

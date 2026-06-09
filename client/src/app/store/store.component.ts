@@ -22,15 +22,24 @@ export class StoreComponent implements OnInit {
   @Input() title: string = '';
   ngOnInit() {
     // initialize selected brand ant type
-    this.selectedBrand = null;
-    this.selectedType = null;
+    this.selectedBrand = {id: 0, name: 'All'};
+    this.selectedType = {id: 0, name: 'All'};
 
-    this.fetchProducts();
+    if(this.selectedBrand.id === 0 && this.selectedType.id === 0){
+      this.fetchProducts();
+    }
+    else{
+      this.fetchProducts();
+    }
     this.getBrands();
     this.getTypes(); 
   }
   fetchProducts() {
-    this.storeServices.getProducts().subscribe({
+    //pass the brand/type ids
+    const brandId = this.selectedBrand?.id;
+    const typeId = this.selectedType?.id;
+
+    this.storeServices.getProducts(brandId, typeId).subscribe({
       next: (data) => {
         this.products = data.content;
       },
