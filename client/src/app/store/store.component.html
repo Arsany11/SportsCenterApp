@@ -8,7 +8,7 @@
             <!-- filterSection
                 sort filter -->
             <h5 class="text-primary ml-3 mt-4 mb-3">Sort</h5>
-            <select class="custom-select mb-4">
+            <select class="custom-select mb-4" [(ngModel)]="selectedSort" (change)="onSortChange()">
                 <option value="asc">Name Ascending</option>
                 <option value="desc">Name Descending</option>
             </select>
