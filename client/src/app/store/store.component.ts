@@ -6,40 +6,47 @@ import { Brand } from '../shared/models/brand';
 import { Type } from '../shared/models/type';
 import { ProductItemComponent } from './product-item/product-item.component';
 import { FormsModule } from '@angular/forms';
+import { PageChangedEvent } from 'ngx-bootstrap/pagination';
+import { PaginationModule } from 'ngx-bootstrap/pagination';
+import { StoreModelService } from './store.model.service';
 
 @Component({
   selector: 'app-store',
-  imports: [CommonModule, ProductItemComponent, FormsModule],
+  imports: [CommonModule, ProductItemComponent, FormsModule, PaginationModule],
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.scss'],
 })
 export class StoreComponent implements OnInit {
-  constructor(private storeServices: StoreService) {}
-  products: Product[] = [];
-  brands: Type[] = [];
-  types: Type[] = [];
-  selectedBrand: Type | null = null;
-  selectedType: Type | null = null;
-  selectedSort = 'asc'; // default val
+  constructor(
+    private storeServices: StoreService,
+    public storeData: StoreModelService
+  ) {}
 
   @Input() title: string = '';
   ngOnInit() {
     // initialize selected brand ant type
-    this.selectedBrand = { id: 0, name: 'All' };
-    this.selectedType = { id: 0, name: 'All' };
-
-    if (this.selectedBrand.id === 0 && this.selectedType.id === 0) {
-      this.fetchProducts();
-    } else {
-      this.fetchProducts();
-    }
+    this.storeData.selectedBrand = { id: 0, name: 'All' };
+    this.storeData.selectedType = { id: 0, name: 'All' };
+    this.fetchProducts();
     this.getBrands();
     this.getTypes();
   }
-  fetchProducts() {
+
+  pageChanged(event: PageChangedEvent): void {
+    console.log('Page clicked:', event.page);
+    console.log('Current page before update:', this.storeData.currentPage);
+
+    if (event.page !== this.storeData.currentPage) {
+      this.storeData.currentPage = event.page;
+      this.fetchProducts(this.storeData.currentPage);
+    }
+  }
+
+  fetchProducts(page: number = 1) {
+    const backendPage = page ; // backend page is 0-based, frontend is 1-based
     //pass the brand/type ids
-    const brandId = this.selectedBrand?.id;
-    const typeId = this.selectedType?.id;
+    const brandId = this.storeData.selectedBrand?.id;
+    const typeId = this.storeData.selectedType?.id;
 
     // construct the url
     let url = `${this.storeServices.apiUrl}?`;
@@ -51,47 +58,66 @@ export class StoreComponent implements OnInit {
     if (typeId && typeId !== 0) {
       url += `typeId=${typeId}&`;
     }
-    if(this.selectedSort){
-      url += `sort=name&order=${this.selectedSort}&`;
-    }
-    // Remove the trailing '&' if exist
-    if (url.endsWith('&')) {
-      url = url.slice(0, -1);
+    // search
+    if (this.storeData.search) {
+      url += `keyword=${this.storeData.search}&`;
     }
 
-    this.storeServices.getProducts(brandId, typeId,url).subscribe({
+    // apend the page
+    url += `page=${backendPage}&size=${this.storeData.pageSize}`;
+
+    // sort
+    if (this.storeData.selectedSort !== 'asc') {
+      url += `&sort=name&order=${this.storeData.selectedSort}`;
+    }
+
+    this.storeServices.getProducts(brandId, typeId, url).subscribe({
       next: (data) => {
-        this.products = data.content;
+        this.storeData.products = data.content;
+        this.storeData.pageable = data.pageable;
+        this.storeData.totalElements = data.totalElements;
+        // this.currentPage = this.pageable.pageNumber + 1; // update the current page based on backend response
       },
       error: (error) => {
         console.error('Error fetching products:', error);
       },
     });
   }
+
   getBrands() {
     this.storeServices.getBrands().subscribe({
-      next: (response) => (this.brands = [{ id: 0, name: 'All' }, ...response]),
+      next: (response) => (this.storeData.brands = [{ id: 0, name: 'All' }, ...response]),
       error: (error) => console.log(error),
     });
   }
   getTypes() {
     this.storeServices.getTypes().subscribe({
-      next: (response) => (this.types = [{ id: 0, name: 'All' }, ...response]),
+      next: (response) => (this.storeData.types = [{ id: 0, name: 'All' }, ...response]),
       error: (error) => console.log(error),
     });
   }
   selectBrand(brand: Type) {
     // uppdate the selected brand then fetch the products
-    this.selectedBrand = brand;
+    this.storeData.selectedBrand = brand;
     this.fetchProducts();
   }
 
   selectType(type: Type) {
     // uppdate the selected brand then fetch the products
-    this.selectedType = type;
+    this.storeData.selectedType = type;
     this.fetchProducts();
   }
   onSortChange() {
+    this.fetchProducts();
+  }
+  onSearch() {
+    this.fetchProducts();
+  }
+  onReset() {
+    this.storeData.search = '';
+    this.storeData.selectedBrand = { id: 0, name: 'All' };
+    this.storeData.selectedType = { id: 0, name: 'All' };
+    this.storeData.selectedSort = 'asc';
     this.fetchProducts();
   }
 }
