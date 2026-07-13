@@ -9,10 +9,13 @@ import { FormsModule } from '@angular/forms';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { StoreModelService } from './store.model.service';
+import { PaginationHeaderComponent } from '../shared/components/pagination-header/pagination-header.component';
+import { PaginationComponent } from '../shared/components/pagination/pagination.component';
 
 @Component({
   selector: 'app-store',
-  imports: [CommonModule, ProductItemComponent, FormsModule, PaginationModule],
+  standalone: true,
+  imports: [CommonModule, ProductItemComponent, FormsModule, PaginationModule, PaginationHeaderComponent,PaginationComponent],
   templateUrl: './store.component.html',
   styleUrls: ['./store.component.scss'],
 })
@@ -96,15 +99,17 @@ export class StoreComponent implements OnInit {
       error: (error) => console.log(error),
     });
   }
-  selectBrand(brand: Type) {
+  selectBrand(brand: Brand) {
     // uppdate the selected brand then fetch the products
     this.storeData.selectedBrand = brand;
+    this.storeData.currentPage=1;
     this.fetchProducts();
   }
 
   selectType(type: Type) {
     // uppdate the selected brand then fetch the products
     this.storeData.selectedType = type;
+    this.storeData.currentPage=1;
     this.fetchProducts();
   }
   onSortChange() {
