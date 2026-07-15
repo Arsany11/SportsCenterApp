@@ -11,6 +11,7 @@ import { PaginationModule } from 'ngx-bootstrap/pagination';
 import { StoreModelService } from './store.model.service';
 import { PaginationHeaderComponent } from '../shared/components/pagination-header/pagination-header.component';
 import { PaginationComponent } from '../shared/components/pagination/pagination.component';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-store',
@@ -22,7 +23,8 @@ import { PaginationComponent } from '../shared/components/pagination/pagination.
 export class StoreComponent implements OnInit {
   constructor(
     private storeServices: StoreService,
-    public storeData: StoreModelService
+    public storeData: StoreModelService,
+    private toastr: ToastrService
   ) {}
 
   @Input() title: string = '';
@@ -79,10 +81,12 @@ export class StoreComponent implements OnInit {
         this.storeData.products = data.content;
         this.storeData.pageable = data.pageable;
         this.storeData.totalElements = data.totalElements;
-        // this.currentPage = this.pageable.pageNumber + 1; // update the current page based on backend response
+        this.storeData.currentPage = this.storeData.pageable.pageNumber + 1; // update the current page based on backend response
+        this.toastr.success('Products fetched!!!');
       },
       error: (error) => {
-        console.error('Error fetching products:', error);
+        this.toastr.error('Error fetching products:', error);
+        console.error(error);
       },
     });
   }
