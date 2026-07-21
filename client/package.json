@@ -19,10 +19,13 @@
     "@angular/router": "^19.2.0",
     "@fortawesome/fontawesome-free": "^7.2.0",
     "bootstrap": "^5.3.8",
+    "bootswatch": "^5.3.8",
     "ngx-bootstrap": "^19.0.2",
+    "ngx-spinner": "^19.0.0",
     "ngx-toastr": "^19.1.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xng-breadcrumb": "^15.0.0",
     "zone.js": "~0.15.0"
   },
   "devDependencies": {
