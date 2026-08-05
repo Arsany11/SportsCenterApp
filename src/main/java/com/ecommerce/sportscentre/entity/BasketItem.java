@@ -9,7 +9,7 @@ public class BasketItem {
     @Id
     private Integer id;
     private String name;
-    private String discription;
+    private String description;
     private Long price;
     private String pictureUrl;
     private String productBrand;

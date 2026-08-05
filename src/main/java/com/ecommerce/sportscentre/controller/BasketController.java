@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @RestController
-@RequestMapping("/api/basket")
+@RequestMapping("/api/baskets")
 public class BasketController {
     private final BasketService basketService;
 
@@ -73,7 +73,7 @@ public class BasketController {
         BasketItem basketItem = new BasketItem();
         basketItem.setId(itemResponse.getId());
         basketItem.setName(itemResponse.getName());
-        basketItem.setDiscription(itemResponse.getDiscription());
+        basketItem.setDescription(itemResponse.getDescription());
         basketItem.setPictureUrl(itemResponse.getPictureUrl());
         basketItem.setPrice(itemResponse.getPrice());
         basketItem.setProductBrand(itemResponse.getProductBrand());

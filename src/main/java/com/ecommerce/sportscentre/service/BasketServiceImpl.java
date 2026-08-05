@@ -75,10 +75,11 @@ public class BasketServiceImpl implements BasketService {
     }
 
     private BasketItemResponse convertToBasketItemResponse(BasketItem basketItem) {
+        System.out.println("Description: " + basketItem.getDescription());
         return BasketItemResponse.builder()
                 .id(basketItem.getId())
                 .name(basketItem.getName())
-                .discription(basketItem.getDiscription())
+                .description(basketItem.getDescription())
                 .price(basketItem.getPrice())
                 .pictureUrl(basketItem.getPictureUrl())
                 .quantity(basketItem.getQuantity())
