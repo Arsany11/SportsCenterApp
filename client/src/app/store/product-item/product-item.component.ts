@@ -2,6 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Product } from '../../shared/models/product';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { BasketService } from '../../basket/basket.service';
 
 @Component({
   selector: 'app-product-item',
@@ -13,6 +14,11 @@ import { RouterLink } from '@angular/router';
 export class ProductItemComponent {
 @Input() product: Product | null = null;
 
+constructor(private basketServices: BasketService) { }
+
+addItemToBasket(){
+  this.product && this.basketServices.addItemToBasket(this.product);
+}
 // get the image name from url
 extractImageName():String | null{
   if(this.product && this.product.pictureUrl){

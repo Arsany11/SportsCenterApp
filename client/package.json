@@ -18,6 +18,7 @@
     "@angular/platform-browser-dynamic": "^19.2.0",
     "@angular/router": "^19.2.0",
     "@fortawesome/fontawesome-free": "^7.2.0",
+    "@paralleldrive/cuid2": "^3.3.0",
     "bootstrap": "^5.3.8",
     "bootswatch": "^5.3.8",
     "ngx-bootstrap": "^19.0.2",

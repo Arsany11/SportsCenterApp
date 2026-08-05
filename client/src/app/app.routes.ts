@@ -5,14 +5,23 @@ import { NotFoundComponent } from './core/not-found/not-found.component';
 import { ServerErrorComponent } from './core/server-error/server-error.component';
 
 export const routes: Routes = [
-    { path: '', component: HomeComponent, data:{breadcrumb: 'Home'} },
-    { path: 'not-found', component: NotFoundComponent },
-    { path: 'server-error', component: ServerErrorComponent },
-    { path: 'store/:id', component: ProductDetailsComponent,data: {breadcrumb:{alias: 'ProductName'}} },
-    {
+  { path: '', component: HomeComponent, data: { breadcrumb: 'Home' } },
+  { path: 'not-found', component: NotFoundComponent },
+  { path: 'server-error', component: ServerErrorComponent },
+  {
+    path: 'store/:id',
+    component: ProductDetailsComponent,
+    data: { breadcrumb: { alias: 'ProductName' } },
+  },
+  {
     path: 'store',
     loadComponent: () =>
-        import('./store/store.component').then((m) => m.StoreComponent),
-    },
-    { path: '**', redirectTo: '', pathMatch: 'full' },
+      import('./store/store.component').then((m) => m.StoreComponent), data: { breadcrumb: 'Store' }
+  },
+  {
+    path: 'basket',
+    loadChildren: () =>
+      import('./basket/basket.routes').then((r) => r.basketRoutes), data: { breadcrumb: 'Basket' }
+  },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
