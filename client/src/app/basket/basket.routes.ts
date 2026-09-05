@@ -4,6 +4,6 @@ import { BasketComponent } from './basket.component';
 export const basketRoutes: Routes = [
     {
         path: '',
-        component: BasketComponent,
+        component: BasketComponent, // eager loading.
     },
 ];

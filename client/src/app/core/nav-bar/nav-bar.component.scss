@@ -12,7 +12,7 @@
 }
 .navbar-nav .nav-link {
     color: #333;
-      position: relative;
+    position: relative;
     display: inline-block;
 }
 .navbar-nav .nav-link .fas {
@@ -41,4 +41,22 @@
     // position: relative;
     margin-top: 5px;
     margin-bottom: auto;
+}
+
+// correct positioning for mobile view and collapsing
+.navbar-toggler {
+    border: none;
+}
+.navbar-collapse {
+    justify-content: flex-end;
+}
+@media (max-width: 991px) {
+    .navbar-nav .nav-link{
+        padding-left: 0.5em;
+        padding-right: 0.5em;
+    }
+}
+// ensure the navbar doesn't overlap with the content 
+body{
+    padding-top: 50px; /* Adjust this value based on your navbar height */
 }

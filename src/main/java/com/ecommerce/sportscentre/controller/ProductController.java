@@ -34,7 +34,7 @@ public class ProductController {
     }
 
     @GetMapping()
-    @PreAuthorize("isAuthenticated()")
+//    @PreAuthorize("isAuthenticated()")
     public ResponseEntity<Page<ProductResponse>> getProducts(
             @PageableDefault(size = 10)Pageable pageable,
             @RequestParam(name = "keyword" ,required = false) String keyword,

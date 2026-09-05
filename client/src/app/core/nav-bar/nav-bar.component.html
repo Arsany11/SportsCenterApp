@@ -3,41 +3,58 @@
         <img src="assets/images/logo.png" alt="Sports img" width="90">
         Sports Center
     </a>
-    <button
-    class="navbar-toggler" 
-    type="button" 
-    data-toggle="collapse" 
-    data-target="#navbarNav" 
-    aria-controls="navbarNav" 
-    aria-expanded="false" 
-    aria-label="Toggle navigation"
-    >
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav ms-auto">
             <li class="nav-item" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }">
                 <a class="nav-link" routerLink="/">
-                    <i class ="fas fa-home" ></i>
+                    <i class="fas fa-home"></i>
                     Home</a>
             </li>
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="/store">
-                    <i class ="fas fa-th-list"></i>
+                    <i class="fas fa-th-list"></i>
                     Store</a>
             </li>
             <li class="nav-item" routerLinkActive="active">
                 <a class="nav-link" routerLink="/basket">
                     <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-badge" *ngIf="(basketService.basketSource$ | async) as basket">{{getItemsCount(basket.items)}}</span>
+                    <span class="cart-badge"
+                        *ngIf="(basketSource$ | async) as basket">{{getItemsCount(basket.items)}}</span>
                 </a>
             </li>
-            <li class="nav-item" routerLinkActive="active">
-                <a class="nav-link" href="#">
-                    <i class="fas fa-sign-out-alt"></i>
-                    Logout
-                </a>
-            </li>
+            <ng-container *ngIf="(currentUser$ | async)===null">
+                <!-- can be also accountService.currentUser$ -->
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link" routerLink="/account/login">
+                        <i class="fas fa-right-to-bracket"></i>
+                        Login
+                    </a>
+                </li>
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link" routerLink="/account/register">
+                        <i class="fas fa-user-plus"></i>
+                        Signup
+                    </a>
+                </li>
+            </ng-container>
+             <ng-container *ngIf="(currentUser$ | async) as user">
+                <!-- can be also accountService.currentUser$ -->
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link" routerLink="/account/profile">
+                        Welcome, {{user.username}}
+                    </a>
+                </li>
+                <li class="nav-item" routerLinkActive="active">
+                    <a class="nav-link" (click)="logout()">
+                        <i class="fas fa-sign-out-alt"></i>
+                        Logout
+                    </a>
+                </li>
+            </ng-container>
         </ul>
     </div>
 </nav>
