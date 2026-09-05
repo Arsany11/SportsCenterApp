@@ -29,11 +29,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
+        System.out.println("🔥 JWT FILTER: "
+                + request.getMethod()
+                + " "
+                + request.getRequestURI());
+        if ("OPTIONS".equalsIgnoreCase(request.getMethod())) {
+            filterChain.doFilter(request, response);
+            return;
+        }
         String requestHeader = request.getHeader("Authorization");
-        log.info("Header: {}",requestHeader);
+//        log.info("Header: {}",requestHeader);
+        log.info("Method: {}, URI: {}, Header: {}",
+                request.getMethod(),
+                request.getRequestURI(),
+                requestHeader);
         String userName= null;
         String token = null;
-        if(requestHeader!=null && requestHeader.startsWith("Bearer")){
+        if(requestHeader!=null && requestHeader.startsWith("Bearer ")){
             token = requestHeader.substring(7);
             try{
                 userName = this.jwtHelper.getUserNameFromToken(token);

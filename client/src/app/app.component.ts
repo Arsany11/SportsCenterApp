@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
   title = 'Sports Center';
   constructor(private basketService: BasketService) {}
   ngOnInit() {
-    const basketId =  localStorage.getItem('basket-id');
+    const basketId = localStorage.getItem('basket-id');
     if(basketId) this.basketService.getBasket(basketId);
   }
 }

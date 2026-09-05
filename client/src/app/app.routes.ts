@@ -23,5 +23,9 @@ export const routes: Routes = [
     loadChildren: () =>
       import('./basket/basket.routes').then((r) => r.basketRoutes), data: { breadcrumb: 'Basket' }
   },
+  {
+    path: 'account',loadChildren: () =>
+      import('./account/account.routes').then((r) => r.AccountRoutes), data: { breadcrumb: { skip: true } }
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];

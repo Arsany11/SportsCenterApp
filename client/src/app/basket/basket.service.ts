@@ -61,7 +61,7 @@ export class BasketService {
   }
   createBasket(): Basket {
     const basket = new Basket();
-    localStorage.setItem('basket_id', basket.id);
+    localStorage.setItem('basket-id', basket.id);
     return basket;
   }
 
@@ -75,7 +75,7 @@ export class BasketService {
       }
       // check if basket become empty
       if (basket.items.length === 0) {
-        localStorage.removeItem('basket_id');
+        localStorage.removeItem('basket-id');
       }
     }
   }
