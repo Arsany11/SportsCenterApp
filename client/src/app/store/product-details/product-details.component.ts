@@ -4,6 +4,8 @@ import { StoreService } from '../store.service';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CurrencyPipe, NgIf } from '@angular/common';
 import { BreadcrumbService } from 'xng-breadcrumb';
+import { BasketService } from '../../basket/basket.service';
+import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-product-details',
   imports: [NgIf, CurrencyPipe,RouterLink],
@@ -17,7 +19,9 @@ export class ProductDetailsComponent implements OnInit {
   constructor(
     private storeService: StoreService,
     private activatedRoute: ActivatedRoute,
-    private breadcrumb: BreadcrumbService
+    private breadcrumb: BreadcrumbService,
+    private basketService :BasketService,
+    private toastr :ToastrService
   ) {}
 
   ngOnInit(): void {
@@ -37,6 +41,13 @@ export class ProductDetailsComponent implements OnInit {
       });
     }
   }
+  addToCart(){
+    if(this.product){
+      this.basketService.addItemToBasket(this.product, this.quantity);
+      this.toastr.success('Item added to cart');
+    }
+  }
+
   extractImageName(): string | null {
     if (this.product && this.product.pictureUrl) {
       const parts = this.product.pictureUrl.split('/');

@@ -8,27 +8,39 @@ import { Product } from '../shared/models/product';
   providedIn: 'root',
 })
 export class BasketService {
+  
   public apiUrl = 'http://localhost:8080/api/baskets';
   private basketSource = new BehaviorSubject<Basket | null>(null);
   basketSource$ = this.basketSource.asObservable();
 
-  private basketTotalSource = new BehaviorSubject<BasketTotals | null>(null);
+  private basketTotalSource = new BehaviorSubject<BasketTotals>({
+    subtotal: 0,
+    shipping: 0,
+    total: 0,
+  });
   basketTotalSource$ = this.basketTotalSource.asObservable();
   constructor(private http: HttpClient) {}
 
+  updateShippingPrice(shippingPrice: number): void {
+    const updateBasketTotal = this.basketTotalSource.value;
+    updateBasketTotal.shipping = shippingPrice;
+    updateBasketTotal.total = updateBasketTotal.subtotal + shippingPrice;
+    this.basketTotalSource.next(updateBasketTotal);
+  }
+
   getBasket(id: string) {
     return this.http.get<Basket>(this.apiUrl + '/' + id).subscribe({
-      next: (basket) => {this.basketSource.next(basket),
-        this.calculateTotals();
-      }
+      next: (basket) => {
+        (this.basketSource.next(basket), this.calculateTotals());
+      },
     });
   }
 
   setBasket(basket: Basket) {
     return this.http.post<Basket>(this.apiUrl, basket).subscribe({
-      next: (basket) => {this.basketSource.next(basket),
-        this.calculateTotals();
-      }
+      next: (basket) => {
+        (this.basketSource.next(basket), this.calculateTotals());
+      },
     });
   }
 
@@ -36,10 +48,10 @@ export class BasketService {
     return this.basketSource.value;
   }
 
-  addItemToBasket(item: Product) {
+  addItemToBasket(item: Product, quantity : number) {
     const itemToAdd = this.mapProductToBasket(item);
     const basket = this.getCurrentBasket() ?? this.createBasket();
-    basket.items = this.upsertItem(basket.items, itemToAdd, 1);
+    basket.items = this.upsertItem(basket.items, itemToAdd, quantity);
 
     this.setBasket(basket);
   }
@@ -108,9 +120,12 @@ export class BasketService {
     const basket = this.getCurrentBasket();
     if (basket) {
       const shipping = 0; // Assuming shipping is fixed for now
-      const subTotal = basket.items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
-      const total = subTotal + shipping;
-      this.basketTotalSource.next({ shipping, subTotal, total });
+      const subtotal = basket.items.reduce(
+        (sum, item) => sum + item.price * item.quantity,
+        0,
+      );
+      const total = subtotal + shipping;
+      this.basketTotalSource.next({ shipping, subtotal, total });
     }
   }
 
@@ -126,4 +141,11 @@ export class BasketService {
       quantity: 0,
     };
   }
+
+    clearBasket() {
+    this.basketSource.next(null);
+    localStorage.removeItem('basket_id');
+    localStorage.removeItem('basket');
+  }
+
 }

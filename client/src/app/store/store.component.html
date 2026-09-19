@@ -20,7 +20,7 @@
             <h5 class="text-primary ml-3 mt-4 mb-3">Brands</h5>
             <ul class="list-group my-3">
                 <li class="list-group-item" *ngFor="let brand of storeData.brands"
-                    [ngClass]="{active: storeData.selectedBrand?.id === 0 && brand.id==0 || (storeData.selectedBrand === brand && storeData.selectedBrand?.id !== 0)}"
+                    [ngClass]="{active: storeData.selectedBrand?.id === 0 && brand.id==0 || (storeData.selectedBrand === brand && storeData.selectedBrand.id !== 0)}"
                     (click)="selectBrand(brand)">
                     {{ brand.name }}
                 </li>
@@ -28,7 +28,7 @@
             <h5 class="text-primary ml-3 mt-4 mb-3">Types</h5>
             <ul class="list-group my-3">
                 <li class="list-group-item" *ngFor="let type of storeData.types"
-                    [ngClass]="{active: storeData.selectedType?.id === 0 && type.id==0 || (storeData.selectedType === type && storeData.selectedType?.id !== 0)}"
+                    [ngClass]="{active: storeData.selectedType?.id === 0 && type.id==0 || (storeData.selectedType === type && storeData.selectedType.id !== 0)}"
                     (click)="selectType(type)">
                     {{ type.name }}
                 </li>

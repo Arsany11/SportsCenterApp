@@ -27,5 +27,9 @@ export const routes: Routes = [
     path: 'account',loadChildren: () =>
       import('./account/account.routes').then((r) => r.AccountRoutes), data: { breadcrumb: { skip: true } }
   },
+  {
+    path: 'checkout',loadChildren: () =>
+      import('./checkout/checkout.routes').then((r) => r.routes), data: { breadcrumb: 'checkout'}
+  },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
