@@ -9,24 +9,24 @@ import { BasketService } from '../../basket/basket.service';
   standalone: true,
   imports: [CommonModule, RouterLink],
   templateUrl: './product-item.component.html',
-  styleUrl: './product-item.component.scss'
+  styleUrl: './product-item.component.scss',
 })
 export class ProductItemComponent {
-@Input() product: Product | null = null;
+  @Input() product: Product | null = null;
 
-constructor(private basketServices: BasketService) { }
+  constructor(private basketServices: BasketService) {}
 
-addItemToBasket(){
-  this.product && this.basketServices.addItemToBasket(this.product);
-}
-// get the image name from url
-extractImageName():String | null{
-  if(this.product && this.product.pictureUrl){
-    const parts = this.product.pictureUrl.split('/');
-    if(parts.length > 0){
-      return parts[parts.length - 1];// to return the last part
-    }
+  addItemToBasket() {
+    this.product && this.basketServices.addItemToBasket(this.product, 1);
   }
-return null; // if it's invalid 
-}
+  // get the image name from url
+  extractImageName(): String | null {
+    if (this.product && this.product.pictureUrl) {
+      const parts = this.product.pictureUrl.split('/');
+      if (parts.length > 0) {
+        return parts[parts.length - 1]; // to return the last part
+      }
+    }
+    return null; // if it's invalid
+  }
 }

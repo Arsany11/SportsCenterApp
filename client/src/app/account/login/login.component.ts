@@ -23,8 +23,7 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private accountService: AccountService,
     private toastService: ToastrService,
-    private router: Router
-
+    private router: Router,
   ) {
     this.loginForm = this.formBuilder.group({
       username: ['', [Validators.required]],
@@ -35,13 +34,17 @@ export class LoginComponent {
 
   onSubmit() {
     this.accountService.login(this.loginForm.value).subscribe({
-      next: user =>{
+      next: (user) => {
+        const redirect = this.accountService.redirectUrl
+          ? this.accountService.redirectUrl
+          : '/store';
+        this.router.navigateByUrl(redirect);
+        this.accountService.redirectUrl = null; // clearing the redirct url post navigation
         this.toastService.success('Successfully Logged In');
-        this.router.navigateByUrl('/store');
       },
-      error: () =>{
+      error: () => {
         this.toastService.error('Invalid username or password');
-      }
-    })
+      },
+    });
   }
 }

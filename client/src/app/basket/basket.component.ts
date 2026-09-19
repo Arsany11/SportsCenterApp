@@ -3,11 +3,12 @@ import { BasketService } from './basket.service';
 import { Basket, BasketItem } from '../shared/models/basket';
 import { CurrencyPipe ,CommonModule} from '@angular/common';
 import { OrderSummaryComponent } from '../shared/components/order-summary/order-summary.component';
+import { RouterLink } from '@angular/router';
 
 
 @Component({
   selector: 'app-basket',
-  imports: [CurrencyPipe, CommonModule, OrderSummaryComponent],
+  imports: [CurrencyPipe, CommonModule, OrderSummaryComponent, RouterLink],
   templateUrl: './basket.component.html',
   styleUrl: './basket.component.scss',
 })
