@@ -34,11 +34,6 @@ public class BasketController {
             return ResponseEntity.ok(basket);
         }
     }
-//    @PostMapping
-//    public ResponseEntity<BasketResponse> createBasket(@RequestBody Basket basket){
-//        BasketResponse createdBasket = basketService.createBasket(basket);
-//        return ResponseEntity.status(HttpStatus.CREATED).body(createdBasket);
-//    }
 
     @DeleteMapping("/{basketId}")
     public ResponseEntity<Void> deleteBasket(@PathVariable String basketId){

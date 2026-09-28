@@ -11,15 +11,17 @@
                             <label for="username" class="form-label">Username</label>
                             <input class="form-control" id="username" placeholder="Enter your username"
                                 formControlName="username" type="text" autocomplete="off">
-                            <div *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched" class="text-danger">
+                            <div *ngIf="loginForm.get('username')?.hasError('required') && loginForm.get('username')?.touched"
+                                class="text-danger">
                                 Username is required
                             </div>
                         </div>
                         <div class="mb-3">
                             <label for="password" class="form-label">Password</label>
-                            <input class="form-control" id="password" placeholder="Enter your password" formControlName="password"
-                                type="password">
-                                <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched" class="text-danger">
+                            <input class="form-control" id="password" placeholder="Enter your password"
+                                formControlName="password" type="password">
+                            <div *ngIf="loginForm.get('password')?.hasError('required') && loginForm.get('password')?.touched"
+                                class="text-danger">
                                 Password is required
                             </div>
                         </div>
@@ -32,6 +34,10 @@
                         </div>
                         <div class="d-grid gap-2">
                             <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+                        </div>
+                        <div class="text-center mt-3">
+                            <span>Don't have an account?</span>
+                            <a routerLink="/account/register" class="ms-1">Register</a>
                         </div>
                     </form>
                 </div>
