@@ -9,6 +9,15 @@ USE `sportscenter` ;
 DROP TABLE IF EXISTS Brand;
 DROP TABLE IF EXISTS Type;
 DROP TABLE IF EXISTS Product;
+DROP TABLE IF EXISTS Users;
+
+-- Create the User table
+CREATE TABLE `Users` (
+                        `Id` INT AUTO_INCREMENT PRIMARY KEY,
+                        `UserName` VARCHAR(100) NOT NULL UNIQUE,
+                        `Email` VARCHAR(255) NOT NULL UNIQUE,
+                        `PasswordHash` VARCHAR(255) NOT NULL
+);
 
 -- Create the Brand table
 CREATE TABLE `Brand` (

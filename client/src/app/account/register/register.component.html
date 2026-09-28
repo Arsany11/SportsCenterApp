@@ -1,1 +1,93 @@
-<p>register works!</p>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="text-center">Register</h2>
+                </div>
+
+                <div class="card-body">
+                    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+
+                        <!-- Username -->
+                        <div class="mb-3">
+                            <label for="username" class="form-label">
+                                Username
+                            </label>
+
+                            <input class="form-control" id="username" placeholder="Enter your username"
+                                formControlName="username" type="text" autocomplete="off">
+
+                            <div *ngIf="registerForm.get('username')?.hasError('required')
+                                    && registerForm.get('username')?.touched" class="text-danger">
+                                Username is required
+                            </div>
+
+                            <div *ngIf="registerForm.get('username')?.hasError('minlength')
+                                    && registerForm.get('username')?.touched" class="text-danger">
+                                Username must be at least 3 characters
+                            </div>
+
+                            <div *ngIf="registerForm.get('username')?.hasError('maxlength')
+                                    && registerForm.get('username')?.touched" class="text-danger">
+                                Username cannot exceed 100 characters
+                            </div>
+                        </div>
+
+                        <!-- Email -->
+                        <div class="mb-3">
+                            <label for="email" class="form-label">
+                                Email
+                            </label>
+
+                            <input class="form-control" id="email" placeholder="Enter your email"
+                                formControlName="email" type="email" autocomplete="email">
+
+                            <div *ngIf="registerForm.get('email')?.hasError('required')
+                                    && registerForm.get('email')?.touched" class="text-danger">
+                                Email is required
+                            </div>
+
+                            <div *ngIf="registerForm.get('email')?.hasError('email')
+                                    && registerForm.get('email')?.touched" class="text-danger">
+                                Please enter a valid email
+                            </div>
+                        </div>
+
+                        <!-- Password -->
+                        <div class="mb-3">
+                            <label for="password" class="form-label">
+                                Password
+                            </label>
+
+                            <input class="form-control" id="password" placeholder="Enter your password"
+                                formControlName="password" type="password" autocomplete="new-password">
+
+                            <div *ngIf="registerForm.get('password')?.hasError('required')
+                                    && registerForm.get('password')?.touched" class="text-danger">
+                                Password is required
+                            </div>
+
+                            <div *ngIf="registerForm.get('password')?.hasError('minlength')
+                                    && registerForm.get('password')?.touched" class="text-danger">
+                                Password must be at least 6 characters
+                            </div>
+
+                            <div *ngIf="registerForm.get('password')?.hasError('maxlength')
+                                    && registerForm.get('password')?.touched" class="text-danger">
+                                Password cannot exceed 100 characters
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary" type="submit" [disabled]="!registerForm.valid">
+                                Register
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

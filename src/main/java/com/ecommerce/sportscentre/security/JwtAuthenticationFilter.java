@@ -37,6 +37,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             filterChain.doFilter(request, response);
             return;
         }
+
+        // Public authentication endpoints don't need JWT
+        String requestURI = request.getRequestURI();
+
+        if (requestURI.equals("/auth/login")
+                || requestURI.equals("/auth/register")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         String requestHeader = request.getHeader("Authorization");
 //        log.info("Header: {}",requestHeader);
         log.info("Method: {}, URI: {}, Header: {}",
